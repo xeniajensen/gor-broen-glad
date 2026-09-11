@@ -156,7 +156,10 @@
   .lvlup.show{opacity:1}
   .lvlup .k{font-family:var(--pixel); font-size:10px; letter-spacing:.2em}
   .lvlup .t{font-family:var(--display); font-weight:800; font-size:30px; line-height:1.02; margin:8px 0 6px; text-wrap:balance}
-  .lvlup .s{font-size:13px; max-width:26ch; margin:0 auto; font-weight:600}
+  .lvlup .s{font-size:14px; max-width:28ch; margin:0 auto; font-weight:600; line-height:1.45}
+  .lvlup.show{pointer-events:auto}
+  .lu-ok{margin-top:18px; border:0; border-radius:999px; padding:11px 22px; background:#3A1B22; color:#FFE29A; font-family:var(--display); font-weight:800; font-size:15px; cursor:pointer; box-shadow:0 4px 0 rgba(0,0,0,.35)}
+  .lu-ok:active{transform:translateY(3px); box-shadow:none}
 
   /* physical buttons */
   .keys{display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin:22px 10px 0}
@@ -384,7 +387,7 @@
             <div class="list" id="shList"></div>
             <div class="earn">KØR ÖVER +50 · STREAK-BONUS +25 · NUS +1 · GODNATT +2<br><span id="shDay">DAG 1</span> · NÆSTE RABATTRIN: <span id="shNext">-</span></div>
           </div>
-          <div class="lvlup" id="lvlup"><div><div class="k">NYT BÅND · NY NIVÅ</div><div class="t" id="luT">Broens bedste ven</div><div class="s" id="luS">Den har lavet en tegning af jer to. Det er mest streger.</div></div></div>
+          <div class="lvlup" id="lvlup" role="dialog"><div><div class="k">NYT BÅND · NY NIVÅ</div><div class="t" id="luT">Broens bedste ven</div><div class="s" id="luS">Den har lavet en tegning af jer to. Det er mest streger.</div><button class="lu-ok" id="luOk">Tack tack! 💛</button></div></div>
         </div>
       </div>
 
@@ -558,7 +561,6 @@
       setTimeout(function(){
         var L=LEVELS[levelOf()]; $("luT").textContent=L.t; $("luS").innerHTML=L.s+"<br><br>🎁 Ny rabat: <b>"+rabat()+" %</b> på alle ture over broen.";
         lvlup.classList.add("show"); heartsBurst(12,50,50); buzz([60,60,60,60,150]);
-        setTimeout(function(){ lvlup.classList.remove("show"); render(); },2800);
       },2200);
     }
   }
@@ -590,6 +592,8 @@
   $("reset").addEventListener("click", reset);
   $("ptsBtn").addEventListener("click", function(e){ e.stopPropagation(); openSheet(); });
   $("shClose").addEventListener("click", closeSheet);
+  $("luOk").addEventListener("click", function(e){ e.stopPropagation(); lvlup.classList.remove("show"); render(); });
+  lvlup.addEventListener("click", function(e){ e.stopPropagation(); });
   $("sheet").addEventListener("click", function(e){ e.stopPropagation(); });
   $("tabs").addEventListener("click", function(e){ var b=e.target.closest("button"); if(!b) return; tab=b.dataset.t; $("tabs").querySelectorAll("button").forEach(function(x){ x.classList.toggle("on", x===b); }); renderSheet(); });
   document.addEventListener("visibilitychange", function(){ if(document.visibilityState==="visible"){ var d=Math.floor((Date.now()-S.seen)/DAY); if(d>0){ decay(d); render(); } } else save(); });
