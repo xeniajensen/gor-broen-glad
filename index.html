@@ -182,39 +182,42 @@
   .key small{font-family:var(--pixel); font-size:8px; letter-spacing:.12em; color:#7590A0; font-weight:400}
 
 
-  /* egg shell fills the phone; a modest rectangular LCD sits inside it */
-  body{display:block; padding:0; background:#071E2A}
+  /* a real egg on a dark ground; classic wide LCD up top, keys in an arc below */
+  body{display:flex; align-items:center; justify-content:center; padding:0; background:radial-gradient(120% 80% at 50% 0%, #1B6A86, #0E3B4E 60%, #071E2A)}
   .egg{
-    position:fixed; inset:0; width:auto; max-width:none; margin:0; display:flex; flex-direction:column; justify-content:center; align-items:center;
-    padding:max(16px, env(safe-area-inset-top)) 16px max(16px, env(safe-area-inset-bottom));
-    border-radius:38% 38% 34% 34% / 16% 16% 20% 20%; gap:0;
+    position:relative; width:min(92vw, 360px, calc(100dvh * .6)); aspect-ratio:0.62; max-width:none; margin:0;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0;
+    padding:0 26px; border-radius:50% 50% 50% 50% / 46% 46% 54% 54%;
+    background:radial-gradient(110% 80% at 35% 18%, #fff 0%, #F4F7F9 38%, #CBD7DE 100%);
+    box-shadow:inset 0 -14px 0 #A9BAC3, inset 0 6px 0 #fff, 0 40px 60px -30px rgba(0,0,0,.8);
   }
-  .egg::before{inset:10px}
-  .brand{margin:0 0 14px}
+  .egg::before{inset:12px; border-radius:inherit}
+  .brand{margin:0 0 12px; font-size:8px}
   .lcd{
-    flex:0 0 auto; width:min(78%, 330px); aspect-ratio:4/5; max-height:58dvh; margin:0 auto; border-radius:26px;
-    background:#0A1E27; box-shadow:inset 0 0 0 5px #0A1E27, inset 0 0 0 7px #2A4553, 0 0 0 3px var(--shell-3), 0 14px 30px -14px rgba(14,59,78,.6);
+    flex:0 0 auto; width:100%; aspect-ratio:1/1.02; max-height:none; margin:0; border-radius:22px;
+    background:#0A1E27; box-shadow:inset 0 0 0 4px #0A1E27, inset 0 0 0 6px #2A4553, 0 0 0 3px #A9BAC3, 0 10px 24px -12px rgba(14,59,78,.7);
   }
-  .scene{inset:7px; border-radius:20px}
-  .hud{top:10px; left:12px; right:12px}
-  .needs{gap:5px}
-  .need{font-size:8px; padding:3px 6px; gap:3px} .need .hearts{font-size:9px}
-  .pts{font-size:8px; padding:4px 7px; gap:4px} .pts b{font-size:10px}
-  .moodtag{left:14px; bottom:64px; font-size:24px} .moodtag small{font-size:8px; margin-bottom:4px}
-  .bubble{left:10px; right:10px; bottom:10px; font-size:12px; padding:8px 10px}
-  .lvlup .t{font-size:24px} .lvlup .s{font-size:12.5px}
-  .sheet{border-radius:20px 20px 18px 18px}
-  .keys{margin:22px 0 0; width:min(84%, 360px); gap:10px}
-  .key .cap{width:58px; height:58px; font-size:24px}
-  .key small{white-space:nowrap; letter-spacing:.08em}
-  @media (min-width:700px){
-    body{background:radial-gradient(120% 80% at 50% 0%, #1B6A86, #0E3B4E 60%, #071E2A)}
-    .egg{inset:auto; position:relative; width:420px; height:min(860px, calc(100dvh - 24px)); margin:12px auto}
-  }
-  .menu{bottom:max(14px, env(safe-area-inset-bottom)); top:auto; right:18px}
-  .menu summary{background:rgba(14,59,78,.12); color:#3E5A68; font-size:16px; width:30px; height:30px}
+  .scene{inset:6px; border-radius:17px}
+  .hud{top:8px; left:9px; right:9px; justify-content:center}
+  .needs{gap:4px}
+  .need{font-size:7.5px; padding:3px 5px; gap:3px} .need .hearts{font-size:8.5px}
+  .moodtag{left:12px; bottom:54px; font-size:20px} .moodtag small{font-size:7.5px; margin-bottom:3px}
+  .bubble{left:8px; right:8px; bottom:8px; font-size:11px; padding:7px 9px; line-height:1.35}
+  .bubble::before{width:10px; height:10px; top:-6px}
+  .lvlup .t{font-size:20px} .lvlup .s{font-size:11.5px} .lu-ok{padding:9px 16px; font-size:13px; margin-top:12px}
+  .lvlup .k{font-size:8px}
+  .sheet{border-radius:17px}
+  .sh-head b{font-size:18px} .sh-head .tier b{font-size:12px}
+  .rw .rn{font-size:12px} .rw .rs{font-size:10px} .rw .ri{font-size:18px}
+  .pts{margin:12px auto 0; font-size:9px} .pts b{font-size:11px}
+  .keys{margin:18px 0 0; width:100%; gap:8px; align-items:start}
+  .key .cap{width:54px; height:54px; font-size:22px}
+  .key.a,.key.c{transform:translateY(14px)}
+  .key small{white-space:nowrap; letter-spacing:.06em; font-size:7px}
+  .menu{bottom:max(14px, env(safe-area-inset-bottom)); top:auto; right:16px}
+  .menu summary{background:rgba(255,255,255,.14); color:#fff; font-size:16px; width:32px; height:32px}
   .menu .m{bottom:42px; top:auto}
-  .install{bottom:max(14px, env(safe-area-inset-bottom)); top:auto; left:18px}
+  .install{bottom:max(14px, env(safe-area-inset-bottom)); top:auto; left:16px}
 
   /* bropoint + rewards sheet */
   .hud{pointer-events:none} .hud .pts{pointer-events:auto}
@@ -400,7 +403,6 @@
               <span class="need">💗 <span class="hearts" id="hKaer"></span></span>
               <span class="need">⚡ <span class="hearts" id="hEnergi"></span></span>
             </div>
-            <button class="pts" id="ptsBtn" aria-label="Bropoint og belønninger">🎁 <b id="ptsVal">0</b> <span class="rb" id="ptsRb">0%</span></button>
           </div>
           <div class="moodtag" id="moodTag"><small id="moodSmall">HUMÖR / HUMØR</small>Glad</div>
           <div class="bubble" id="bubble">Er det dig? Det ER dig! Hvornår kører vi igen?</div>
@@ -419,6 +421,7 @@
           <div class="lvlup" id="lvlup" role="dialog"><div><div class="k">NYT BÅND · NY NIVÅ</div><div class="t" id="luT">Broens bedste ven</div><div class="s" id="luS">Den har lavet en tegning af jer to. Det er mest streger.</div><button class="lu-ok" id="luOk">Tack tack! 💛</button></div></div>
         </div>
       </div>
+      <button class="pts" id="ptsBtn" aria-label="Bropoint og belønninger">🎁 <b id="ptsVal">0</b> <span class="rb" id="ptsRb">0%</span></button>
 
       <div class="keys">
         <button class="key a" id="kA"><span class="cap">🚗</span>Kør över<small>BROBIZZ · BEEP</small></button>
