@@ -184,6 +184,41 @@
   @media (max-height:640px){ .lcd{aspect-ratio:auto; height:calc(100dvh - 205px)} .keys .cap{width:54px;height:54px;font-size:22px} }
   .keys{margin-top:clamp(12px,3.5vw,22px)}
 
+  /* bropoint + rewards sheet */
+  .hud{pointer-events:none} .hud .pts{pointer-events:auto}
+  .pts{
+    appearance:none; border:0; cursor:pointer; display:flex; align-items:center; gap:6px;
+    font-family:var(--pixel); font-size:9px; letter-spacing:.08em; color:#3A2A08;
+    background:linear-gradient(180deg,#FFE29A,#FFD166); padding:5px 9px; border-radius:999px;
+    box-shadow:0 2px 0 #B3781B; transition:transform .08s;
+  }
+  .pts:active{transform:translateY(2px); box-shadow:none}
+  .pts b{font-size:11px; letter-spacing:0}
+  .pts .rb{background:#3A2A08; color:#FFE29A; padding:1px 5px; border-radius:6px}
+  .sheet{
+    position:absolute; left:0; right:0; bottom:0; z-index:7; max-height:100%; overflow:hidden;
+    background:#F6FAFC; color:#0F2430; border-radius:20px 20px 0 0; display:flex; flex-direction:column;
+    transform:translateY(105%); transition:transform .38s cubic-bezier(.2,1,.3,1); box-shadow:0 -10px 30px -10px rgba(0,0,0,.5);
+  }
+  .sheet.show{transform:translateY(0)}
+  .sh-head{display:grid; grid-template-columns:1fr 1fr auto; gap:10px; align-items:end; padding:14px 14px 10px; background:linear-gradient(180deg,#FFE29A,#FFD166); color:#3A2A08}
+  .sh-head small{display:block; font-family:var(--pixel); font-size:8px; letter-spacing:.14em; opacity:.75}
+  .sh-head b{font-family:var(--display); font-weight:800; font-size:22px; line-height:1.1}
+  .sh-head .tier b{font-size:15px}
+  .sh-close{border:0; background:rgba(58,42,8,.15); color:#3A2A08; width:28px; height:28px; border-radius:50%; cursor:pointer; font-weight:800; align-self:start}
+  .tabs{display:flex; gap:4px; padding:10px 12px 0}
+  .tabs button{flex:1; border:0; background:transparent; font-family:var(--body); font-weight:800; font-size:12px; color:#7590A0; padding:7px 4px; border-radius:9px; cursor:pointer}
+  .tabs button.on{background:#0E3B4E; color:#fff}
+  .list{overflow:auto; padding:10px 12px; display:flex; flex-direction:column; gap:6px; flex:1}
+  .rw{display:grid; grid-template-columns:34px 1fr auto; gap:10px; align-items:center; background:#fff; border:1px solid #DCE7EC; border-radius:12px; padding:8px 10px}
+  .rw .ri{font-size:22px; line-height:1}
+  .rw .rn{font-weight:800; font-size:13px; line-height:1.2}
+  .rw .rs{font-size:11px; color:#7590A0}
+  .rw button{border:0; border-radius:999px; padding:7px 10px; font-family:var(--pixel); font-size:9px; letter-spacing:.04em; cursor:pointer; background:#FFD166; color:#3A2A08; box-shadow:0 2px 0 #B3781B; white-space:nowrap}
+  .rw button:disabled{background:#E3EBEF; color:#9AAEB8; box-shadow:none; cursor:not-allowed}
+  .earn{font-family:var(--pixel); font-size:8px; letter-spacing:.06em; color:#7590A0; padding:8px 14px 12px; border-top:1px solid #DCE7EC; text-align:center; line-height:1.7}
+  .bp-float{color:#FFE29A}
+
   /* discreet demo menu */
   .menu{position:fixed; right:12px; bottom:max(10px, env(safe-area-inset-bottom)); z-index:20}
   .menu summary{list-style:none; cursor:pointer; width:34px; height:34px; border-radius:50%; display:grid; place-items:center; background:rgba(255,255,255,.14); color:#fff; font-weight:800; font-family:var(--display); font-size:18px; line-height:1}
@@ -320,6 +355,7 @@
               <!-- mouth -->
               <path id="mouth" d="M138 156 Q160 176 182 156" stroke="#1B3A48" stroke-width="4" stroke-linecap="round" fill="#7A2E3E"/>
               <path id="tongue" d="M150 162 Q160 172 170 162 Z" fill="#FF8FA6" opacity="0"/>
+              <g id="hat" opacity="0"><path d="M96 46 Q117 14 138 46 Z" fill="#E4572E"/><rect x="94" y="40" width="46" height="12" rx="6" fill="#FFF3D6"/><circle cx="117" cy="16" r="6" fill="#FFF3D6"/></g>
               <!-- zzz -->
               <text class="zzz" x="232" y="96" font-family="Silkscreen, monospace" font-size="16" fill="#fff">z</text>
               <text class="zzz b" x="242" y="82" font-family="Silkscreen, monospace" font-size="11" fill="#fff">z</text>
@@ -332,12 +368,22 @@
               <span class="need">💗 <span class="hearts" id="hKaer"></span></span>
               <span class="need">⚡ <span class="hearts" id="hEnergi"></span></span>
             </div>
-            <span class="day" id="dayTag">DAG 34</span>
+            <button class="pts" id="ptsBtn" aria-label="Bropoint og belønninger">🎁 <b id="ptsVal">0</b> BP <span class="rb" id="ptsRb">0%</span></button>
           </div>
           <div class="moodtag" id="moodTag"><small id="moodSmall">HUMÖR / HUMØR</small>Glad</div>
           <div class="bubble" id="bubble">Er det dig? Det ER dig! Hvornår kører vi igen?</div>
           <div id="fx"></div>
           <div class="flash" id="flash"></div>
+          <div class="sheet" id="sheet" aria-label="Belønninger">
+            <div class="sh-head">
+              <div><small>BROPOINT</small><b id="shBp">0</b></div>
+              <div class="tier"><small>DIN RABAT · DIN RABATT</small><b id="shTier">0 %</b></div>
+              <button class="sh-close" id="shClose" aria-label="Luk">✕</button>
+            </div>
+            <div class="tabs" id="tabs"><button data-t="dk" class="on">🇩🇰 Danmark</button><button data-t="se">🇸🇪 Sverige</button><button data-t="bro">🌉 Broen</button></div>
+            <div class="list" id="shList"></div>
+            <div class="earn">KØR ÖVER +50 · STREAK-BONUS +25 · NUS +1 · GODNATT +2<br><span id="shDay">DAG 1</span> · NÆSTE RABATTRIN: <span id="shNext">-</span></div>
+          </div>
           <div class="lvlup" id="lvlup"><div><div class="k">NYT BÅND · NY NIVÅ</div><div class="t" id="luT">Broens bedste ven</div><div class="s" id="luS">Den har lavet en tegning af jer to. Det er mest streger.</div></div></div>
         </div>
       </div>
@@ -366,7 +412,8 @@
   var $ = function(id){ return document.getElementById(id); };
   var scene=$("scene"), bridge=$("bridge"), bubble=$("bubble"), fx=$("fx"), flash=$("flash"), lvlup=$("lvlup");
   var KEY="broven-v1", DAY=86400000;
-  var base = {maet:70, kaer:64, energi:88, dag:1, uger:1, cross:1, xp:120, sover:false, seen:Date.now()};
+  var base = {maet:70, kaer:64, energi:88, dag:1, uger:1, cross:1, xp:120, bp:850, hat:false, petsToday:0, sover:false, seen:Date.now()};
+  var RABAT=[0,5,10,15,20,25];
   var S;
 
   var LEVELS = [
@@ -390,6 +437,36 @@
   var PET = ["Hihi! Det kildrar på pylonen.","Mer. Lige der. Ved kablet. Åh, så skönt.","Nus er godt. Ture är bättre. Men nus er godt. Mysigt.","Du er varm. Jag är betong. Det funkar. Vi funkar."];
   var PET_ENOUGH = "Nu er det nog med nusseri, älskling. Kom och kör över i stedet!";
 
+  var REWARDS = {
+    dk:[{i:"🎢",n:"Entré til Tivoli",s:"København · 1 person",c:1200},{i:"🖼️",n:"Louisiana",s:"Humlebæk · entré",c:900},{i:"🐟",n:"Den Blå Planet",s:"Kastrup · lige ved broen",c:1000},{i:"🥐",n:"Kanelsnegl + kaffe",s:"Lagkagehuset · valgfri",c:150},{i:"🚲",n:"Bycykel i 24 timer",s:"København",c:250}],
+    se:[{i:"☕",n:"Fika för två",s:"Malmö Saluhall",c:200},{i:"🧖",n:"Ribersborgs Kallbadhus",s:"Malmö · dagsbiljett",c:700},{i:"🏛️",n:"Malmö Museum",s:"Malmöhus slott · entré",c:600},{i:"🚆",n:"Skånetrafiken dagsbiljett",s:"Hela Skåne",c:500},{i:"🌊",n:"Ystad Saltsjöbad",s:"Spa · halvdag",c:2500}],
+    bro:[{i:"🎟️",n:"Gratis enkelttur",s:"Øresundsbroen · bil",c:1500},{i:"🧢",n:"Hue til broen",s:"Kosmetik · den fryser",c:300,hat:true},{i:"🎄",n:"Julelys på kablerne",s:"Kosmetik · december",c:400}]
+  };
+  var THANKS = {dk:"Ha det sjovt i Danmark! Tag en kanelsnegl med hjem till mig.", se:"Ha så kul i Sverige, älskling! Ta med en kanelbulle hem.", bro:"Åh! Till MIG?! Tack tack tack! Jeg skal aldrig tage den af."};
+  var tab="dk";
+  function fmt(n){ return n.toLocaleString("da-DK"); }
+  function rabat(){ return RABAT[levelOf()]; }
+  function earn(n,x,y){ S.bp+=n; floater("+"+n+" BP", x||50, y||30, "bp-float"); }
+  function openSheet(){ renderSheet(); $("sheet").classList.add("show"); }
+  function closeSheet(){ $("sheet").classList.remove("show"); }
+  function renderSheet(){
+    $("shBp").textContent=fmt(S.bp); $("shTier").textContent=rabat()+" % på alle ture"; $("shDay").textContent="DAG "+S.dag+" · LV "+(levelOf()+1);
+    var nl=LEVELS[levelOf()+1]; $("shNext").textContent = nl ? RABAT[levelOf()+1]+" % ved "+fmt(nl.xp-S.xp)+" XP" : "MAX";
+    var L=$("shList"); L.innerHTML="";
+    REWARDS[tab].forEach(function(r,i){
+      var d=document.createElement("div"); d.className="rw";
+      var owned=r.hat&&S.hat;
+      d.innerHTML='<span class="ri">'+r.i+'</span><span><div class="rn">'+r.n+'</div><div class="rs">'+r.s+'</div></span>';
+      var b=document.createElement("button"); b.textContent= owned ? "HAR DEN" : fmt(r.c)+" BP"; b.disabled = owned || S.bp<r.c;
+      b.addEventListener("click", function(){ redeem(r); }); d.appendChild(b); L.appendChild(d);
+    });
+  }
+  function redeem(r){
+    if(S.bp<r.c) return;
+    S.bp-=r.c; S.kaer=clamp(S.kaer+5); if(r.hat){ S.hat=true; }
+    closeSheet(); render({keep:true, blush:true}); anim("hop",1400); heartsBurst(8,50,40); buzz([30,30,30]);
+    say(THANKS[tab]); setTimeout(function(){ scene.classList.remove("blushing"); },1800);
+  }
   function clamp(v){ return Math.max(0, Math.min(100, v)); }
   function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
   function moodKey(){
@@ -412,7 +489,7 @@
   /* persistence + real-time decay */
   function save(){ S.seen=Date.now(); try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
   function load(){
-    try{ var raw=localStorage.getItem(KEY); if(raw){ S=JSON.parse(raw); } }catch(e){}
+    try{ var raw=localStorage.getItem(KEY); if(raw){ S=JSON.parse(raw); if(S.bp==null){ S.bp=850; S.hat=false; S.petsToday=0; } } }catch(e){}
     if(!S){ S=JSON.parse(JSON.stringify(base)); return; }
     var days=Math.floor((Date.now()-S.seen)/DAY);
     if(days>0){ decay(days); }
@@ -420,7 +497,7 @@
   function decay(days){
     S.dag+=days; S.maet=clamp(S.maet-14*days); S.kaer=clamp(S.kaer-9*days); S.energi=clamp(S.energi+6*days);
     if(days>=7) S.uger=0;
-    S.sover=false;
+    S.petsToday=0; S.sover=false;
   }
 
   function render(opt){
@@ -431,13 +508,13 @@
     $("tongue").setAttribute("opacity",f.tongue); $("brows").setAttribute("d",f.brows);
     $("moodTag").innerHTML='<small>HUMÖR / HUMØR</small>'+NAMES[m];
     $("hMaet").innerHTML=hearts(S.maet); $("hKaer").innerHTML=hearts(S.kaer); $("hEnergi").innerHTML=hearts(S.energi);
-    $("dayTag").textContent="DAG "+S.dag+" · LV "+(levelOf()+1);
+    $("ptsVal").textContent=fmt(S.bp); $("ptsRb").textContent=rabat()+"%"; $("hat").setAttribute("opacity", S.hat?1:0);
     if(!opt.keep) bubble.innerHTML=pick(LINES[m]);
     save();
   }
   function say(h){ bubble.innerHTML=h; }
 
-  function floater(t,x,y){ var d=document.createElement("div"); d.className="floater"; d.textContent=t; d.style.left=x+"%"; d.style.top=y+"%"; fx.appendChild(d); setTimeout(function(){d.remove();},1150); }
+  function floater(t,x,y,cls){ var d=document.createElement("div"); d.className="floater"+(cls?" "+cls:""); d.textContent=t; d.style.left=x+"%"; d.style.top=y+"%"; fx.appendChild(d); setTimeout(function(){d.remove();},1150); }
   function heartsBurst(n,x,y){
     for(var i=0;i<n;i++){
       var h=document.createElement("div"); h.className="heart"; h.textContent=pick(["💗","💙","💛","🤍"]);
@@ -473,11 +550,13 @@
     flash.classList.remove("go"); void flash.offsetWidth; flash.classList.add("go");
     render({keep:true});
     setTimeout(function(){ scene.classList.add("wink"); },350);
+    var bonus = S.uger>=2 ? 25 : 0;
     setTimeout(function(){ scene.classList.remove("wink"); anim("hop",1400); heartsBurst(7,50,38); floater("+120 XP",50,20); },1000);
+    setTimeout(function(){ earn(50+bonus,50,34); render({keep:true}); },1350);
     say(wasSad ? "…er det dig? DET ER DIG! Jeg vidste det! <b>Tak, tak, tak!</b>" : pick(CROSS));
     if(levelOf()>before){
       setTimeout(function(){
-        var L=LEVELS[levelOf()]; $("luT").textContent=L.t; $("luS").textContent=L.s;
+        var L=LEVELS[levelOf()]; $("luT").textContent=L.t; $("luS").innerHTML=L.s+"<br><br>🎁 Ny rabat: <b>"+rabat()+" %</b> på alle ture over broen.";
         lvlup.classList.add("show"); heartsBurst(12,50,50); buzz([60,60,60,60,150]);
         setTimeout(function(){ lvlup.classList.remove("show"); render(); },2800);
       },2200);
@@ -488,6 +567,7 @@
     if(S.sover){ say("…mmh? Fem minuter till… snälla…"); anim("wiggle",1000); return; }
     var enough=S.kaer>=92;
     S.kaer=clamp(S.kaer+7); S.energi=clamp(S.energi-2);
+    if(S.petsToday<5){ S.petsToday++; earn(1, x||50, (y||34)-6); }
     render({keep:true, blush:true});
     anim("wiggle",1000); heartsBurst(3, x||50, y||34);
     say(enough ? PET_ENOUGH : pick(PET));
@@ -496,7 +576,7 @@
   function sleep(){
     press($("kC")); buzz(20);
     S.sover=!S.sover;
-    if(S.sover){ S.energi=clamp(S.energi+30); render({keep:true}); say("Godnat, älskling… tack för i dag. Kør forsigtigt i drømmene. Puss."); look(0,0); }
+    if(S.sover){ S.energi=clamp(S.energi+30); earn(2,50,30); render({keep:true}); say("Godnat, älskling… tack för i dag. Kør forsigtigt i drømmene. Puss."); look(0,0); }
     else { render({keep:true}); say("*gäspar* …er der biler? Är det DIG? Hej hej!"); blink(); }
   }
   function reset(){ S=JSON.parse(JSON.stringify(base)); render({keep:true}); say("Hej hej! Jag är broen. Kører vi? Ska vi?"); look(0,0); }
@@ -508,6 +588,10 @@
   $("skipDay").addEventListener("click", function(){ decay(1); render(); });
   $("skipWeek").addEventListener("click", function(){ decay(7); render(); });
   $("reset").addEventListener("click", reset);
+  $("ptsBtn").addEventListener("click", function(e){ e.stopPropagation(); openSheet(); });
+  $("shClose").addEventListener("click", closeSheet);
+  $("sheet").addEventListener("click", function(e){ e.stopPropagation(); });
+  $("tabs").addEventListener("click", function(e){ var b=e.target.closest("button"); if(!b) return; tab=b.dataset.t; $("tabs").querySelectorAll("button").forEach(function(x){ x.classList.toggle("on", x===b); }); renderSheet(); });
   document.addEventListener("visibilitychange", function(){ if(document.visibilityState==="visible"){ var d=Math.floor((Date.now()-S.seen)/DAY); if(d>0){ decay(d); render(); } } else save(); });
 
   load();
