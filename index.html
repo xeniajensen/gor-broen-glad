@@ -198,7 +198,7 @@
 </head>
 <body>
   <main class="egg">
-    <div class="brand">ØRESUNDSBROEN · BRO-VEN</div>
+    <div class="brand">ØRESUNDSBROEN · BROVÄN · BROVEN</div>
       <div class="lcd">
         <div class="scene m-glad" id="scene" title="Nus broen">
           <svg viewBox="0 0 320 400" preserveAspectRatio="xMidYMid slice" aria-label="Broen, personificeret">
@@ -334,18 +334,18 @@
             </div>
             <span class="day" id="dayTag">DAG 34</span>
           </div>
-          <div class="moodtag" id="moodTag"><small id="moodSmall">HUMØR</small>Glad</div>
+          <div class="moodtag" id="moodTag"><small id="moodSmall">HUMÖR / HUMØR</small>Glad</div>
           <div class="bubble" id="bubble">Er det dig? Det ER dig! Hvornår kører vi igen?</div>
           <div id="fx"></div>
           <div class="flash" id="flash"></div>
-          <div class="lvlup" id="lvlup"><div><div class="k">NYT BÅND</div><div class="t" id="luT">Broens bedste ven</div><div class="s" id="luS">Den har lavet en tegning af jer to. Det er mest streger.</div></div></div>
+          <div class="lvlup" id="lvlup"><div><div class="k">NYT BÅND · NY NIVÅ</div><div class="t" id="luT">Broens bedste ven</div><div class="s" id="luS">Den har lavet en tegning af jer to. Det er mest streger.</div></div></div>
         </div>
       </div>
 
       <div class="keys">
-        <button class="key a" id="kA"><span class="cap">🚗</span>Kør over<small>BROBIZZ · BEEP</small></button>
-        <button class="key b" id="kB"><span class="cap">✋</span>Nus<small>ELLER TRYK PÅ DEN</small></button>
-        <button class="key c" id="kC"><span class="cap">🌙</span>Godnat<small>SOV / VÅGN</small></button>
+        <button class="key a" id="kA"><span class="cap">🚗</span>Kør över<small>BROBIZZ · BEEP</small></button>
+        <button class="key b" id="kB"><span class="cap">✋</span>Nus / Klappa<small>ELLER TRYK PÅ DEN</small></button>
+        <button class="key c" id="kC"><span class="cap">🌙</span>Godnatt<small>SOV / VAKNA</small></button>
       </div>
   </main>
 
@@ -370,25 +370,25 @@
   var S;
 
   var LEVELS = [
-    {xp:0, t:"Ny bekendt", s:"Broen ved ikke helt, hvem du er. Men den håber."},
-    {xp:300, t:"Søndagskører", s:"Den har lært din nummerplade. Den siger den ikke højt."},
-    {xp:800, t:"Fast gæst", s:"Den vinker, når du kommer. Med en kabel."},
-    {xp:1500, t:"Broens bedste ven", s:"Den har lavet en tegning af jer to. Det er mest streger."},
-    {xp:2600, t:"Stormvenner", s:"Den giver dig skylden for vinden. Kærligt."},
-    {xp:4200, t:"Brovogter", s:"Den har givet dig en nøgle. Broen har ingen lås."}
+    {xp:0, t:"Ny bekant", s:"Broen ved ikke helt, hvem du er. Men den hoppas. Så mycket."},
+    {xp:300, t:"Söndagskører", s:"Den har lært din nummerplade. Den säger det inte högt. Bare lidt."},
+    {xp:800, t:"Fast gäst", s:"Den vinker, når du kommer. Med en kabel. Puss puss!"},
+    {xp:1500, t:"Broens bästa ven", s:"Den har lavet en tegning af jer to. Det er mest streger. Och ett hjärta."},
+    {xp:2600, t:"Stormvänner", s:"Den giver dig skylden for vinden. Kärleksfullt. Med kram."},
+    {xp:4200, t:"Brovogter", s:"Den har givet dig en nøgle. Broen har ingen lås. Men tänk på gesten!"}
   ];
-  var NAMES = {overlykkelig:"Overlykkelig", glad:"Glad", tilfreds:"Tilfreds", trist:"Trist", kedafdet:"Ked af det", sover:"Sover"};
+  var NAMES = {overlykkelig:"Överlykkelig", glad:"Glad", tilfreds:"Tilfreds", trist:"Trist", kedafdet:"Ked af det", sover:"Sover"};
   var LINES = {
-    overlykkelig:["TO ture på én uge?! Jeg kan ikke holde mig i ro!","Jeg har pudset alle mine kabler til dig. Alle sammen.","Solen skinner, og det er DIN skyld."],
-    glad:["Er det dig? Det ER dig! Hvornår kører vi igen?","Jeg så din bil helt fra Peberholm. Jeg vinkede.","Der er en mågeunge på pylon 3. Vi kalder den Bent."],
-    tilfreds:["Stille dag. Lidt sidevind. Jeg har det fint, tak.","Jeg tænkte på dig i går. Ikke på en mærkelig måde."],
-    trist:["Det er en uge siden… ikke at jeg tæller.","Jeg tæller.","Kommer du snart? Bare måske?"],
-    kedafdet:["*snøft* …er det noget jeg har gjort?","Færgen sagde, at du ikke savner mig. Færgen lyver, ikke?","Jeg står her bare. I regnen. Alene. Det er fint."],
-    sover:["zzz… bilerne… zzz…","*snorker blidt*"]
+    overlykkelig:["TVÅ ture på én uge?! Jag kan inte holde mig i ro! <b>Tusen tack!</b>","Jeg har pudset alle mine kabler til dig. Alla. Varenda en. Puss!","Solen skinner, og det er DIN skyld, älskling.","Skål för dig! Med Øresundsvand. Det er det, jeg har."],
+    glad:["Är det dig? Det ER dig! <b>Hej hej!</b> Hvornår kører vi igen?","Jeg så din bil helt fra Peberholm. Jag vinkade. Hyggeligt!","Der er en mågeunge på pylon 3. Vi kalder den Bengt. Bengt är fin.","Ska vi fika? Jeg har ingen kanelbullar. Men jag har dig."],
+    tilfreds:["Stille dag. Lite sidvind. Jeg har det fint, tack.","Jag tänkte på dig i går. Ikke på en mærkelig måde. Bara lite.","Lagom. Alt er lagom i dag."],
+    trist:["Det är en uge siden… ikke at jag räknar.","Jeg tæller. Jag räknar. På båda språk.","Kommer du snart? Bara kanske? Bare lidt?"],
+    kedafdet:["*snyft* …är det noget jeg har gjort?","Færgen sa, att du inte saknar mig. Færgen lyver, ikke? <b>Eller hur?!</b>","Jeg står her bare. I regnen. Helt ensam. Det är fint. Det er FINT.","Jag saknar dig så mycket, at jeg ruster."],
+    sover:["zzz… bilarna… zzz…","*snorkar blidt* …tack… zzz"]
   };
-  var CROSS = ["BEEP! Var det dig? Det var dig! <b>Tak!</b>","Jeg kunne mærke det i hele brodækket. Igen! Igen!","Der! Se, solen kom med det samme.","Du kørte over mig. Jeg har aldrig været gladere.","Velkommen over Øresund. Jeg mener det virkelig."];
-  var PET = ["Hihi! Det kilder på pylonen.","Mere. Lige der. Ved kablet.","Nus er godt. Ture er bedre. Men nus er godt.","Du er varm. Jeg er beton. Det fungerer."];
-  var PET_ENOUGH = "Nu er det nok nusseri. Kom og kør over i stedet.";
+  var CROSS = ["BEEP! Var det dig? Det VAR dig! <b>Tusen tack!</b>","Jag kunde mærke det i hele brodækket. Igen! En gång till!","Där! Se, solen kom med det samme. Det er magi. Broma­gi.","Du kørte over mig. Jag har aldrig varit gladare. Puss och kram!","Välkommen over Øresund, älskling. Jeg mener det. Verkligen.","Hej hej hej! Jag har saknat dig så himla mycket!"];
+  var PET = ["Hihi! Det kildrar på pylonen.","Mer. Lige der. Ved kablet. Åh, så skönt.","Nus er godt. Ture är bättre. Men nus er godt. Mysigt.","Du er varm. Jag är betong. Det funkar. Vi funkar."];
+  var PET_ENOUGH = "Nu er det nog med nusseri, älskling. Kom och kör över i stedet!";
 
   function clamp(v){ return Math.max(0, Math.min(100, v)); }
   function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
@@ -429,7 +429,7 @@
     scene.className="scene m-"+m+(opt.blush?" blushing":"");
     $("mouth").setAttribute("d",f.d); $("mouth").setAttribute("fill",f.fill);
     $("tongue").setAttribute("opacity",f.tongue); $("brows").setAttribute("d",f.brows);
-    $("moodTag").innerHTML='<small>HUMØR</small>'+NAMES[m];
+    $("moodTag").innerHTML='<small>HUMÖR / HUMØR</small>'+NAMES[m];
     $("hMaet").innerHTML=hearts(S.maet); $("hKaer").innerHTML=hearts(S.kaer); $("hEnergi").innerHTML=hearts(S.energi);
     $("dayTag").textContent="DAG "+S.dag+" · LV "+(levelOf()+1);
     if(!opt.keep) bubble.innerHTML=pick(LINES[m]);
@@ -485,7 +485,7 @@
   }
   function pet(x,y){
     press($("kB")); buzz(15);
-    if(S.sover){ say("…mmh? Fem minutter mere…"); anim("wiggle",1000); return; }
+    if(S.sover){ say("…mmh? Fem minuter till… snälla…"); anim("wiggle",1000); return; }
     var enough=S.kaer>=92;
     S.kaer=clamp(S.kaer+7); S.energi=clamp(S.energi-2);
     render({keep:true, blush:true});
@@ -496,10 +496,10 @@
   function sleep(){
     press($("kC")); buzz(20);
     S.sover=!S.sover;
-    if(S.sover){ S.energi=clamp(S.energi+30); render({keep:true}); say("Godnat… tak for i dag. Kør forsigtigt i drømmene."); look(0,0); }
-    else { render({keep:true}); say("*gaber* …er der biler? Er der DIG?"); blink(); }
+    if(S.sover){ S.energi=clamp(S.energi+30); render({keep:true}); say("Godnat, älskling… tack för i dag. Kør forsigtigt i drømmene. Puss."); look(0,0); }
+    else { render({keep:true}); say("*gäspar* …er der biler? Är det DIG? Hej hej!"); blink(); }
   }
-  function reset(){ S=JSON.parse(JSON.stringify(base)); render({keep:true}); say("Hej! Jeg er broen. Kører vi?"); look(0,0); }
+  function reset(){ S=JSON.parse(JSON.stringify(base)); render({keep:true}); say("Hej hej! Jag är broen. Kører vi? Ska vi?"); look(0,0); }
 
   $("kA").addEventListener("click", cross);
   $("kB").addEventListener("click", function(){ pet(); });
@@ -513,7 +513,7 @@
   load();
   render({keep:true});
   var m0=moodKey();
-  say(S.cross<=1 ? "Hej! Jeg er broen. Kører vi?" : pick(LINES[m0]));
+  say(S.cross<=1 ? "Hej hej! Jag är broen. Kører vi? Ska vi?" : pick(LINES[m0]));
   if(m0!=="sover") setTimeout(function(){ scene.classList.add("wink"); setTimeout(function(){scene.classList.remove("wink");},450); },1200);
 
   /* PWA */
