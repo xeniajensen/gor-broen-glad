@@ -206,7 +206,17 @@
   .bubble::before{width:10px; height:10px; top:-6px}
   .lvlup .t{font-size:20px} .lvlup .s{font-size:11.5px} .lu-ok{padding:9px 16px; font-size:13px; margin-top:12px}
   .lvlup .k{font-size:8px}
-  .sheet{border-radius:17px}
+  .sheet{border-radius:17px; height:100%}
+  .sh-head{grid-template-columns:auto 1fr auto; gap:8px; padding:8px 10px 7px; align-items:center}
+  .sh-head small{font-size:6.5px; letter-spacing:.1em}
+  .sh-head b{font-size:15px} .sh-head .tier b{font-size:10.5px; line-height:1.2}
+  .sh-close{width:22px; height:22px; font-size:11px; align-self:center}
+  .tabs{padding:6px 8px 0; gap:3px} .tabs button{font-size:10px; padding:5px 2px; border-radius:7px}
+  .list{padding:6px 8px; gap:4px; min-height:0}
+  .rw{grid-template-columns:24px 1fr auto; gap:6px; padding:5px 7px; border-radius:9px}
+  .rw .ri{font-size:15px} .rw .rn{font-size:10.5px} .rw .rs{font-size:8.5px}
+  .rw button{font-size:7.5px; padding:5px 7px}
+  .earn{font-size:6.5px; padding:5px 8px 6px; line-height:1.5}
   .sh-head b{font-size:18px} .sh-head .tier b{font-size:12px}
   .rw .rn{font-size:12px} .rw .rs{font-size:10px} .rw .ri{font-size:18px}
   .pts{margin:10px auto 0; font-size:9px} .pts b{font-size:11px}
@@ -416,7 +426,7 @@
             </div>
             <div class="tabs" id="tabs"><button data-t="dk" class="on">🇩🇰 Danmark</button><button data-t="se">🇸🇪 Sverige</button><button data-t="bro">🌉 Broen</button></div>
             <div class="list" id="shList"></div>
-            <div class="earn">KØR ÖVER +50 · STREAK-BONUS +25 · NUS +1 · GODNATT +2<br><span id="shDay">DAG 1</span> · NÆSTE RABATTRIN: <span id="shNext">-</span></div>
+            <div class="earn"><span id="shDay">DAG 1</span> · NÆSTE RABATTRIN: <span id="shNext">-</span> · KØR ÖVER +50 BP</div>
           </div>
           <div class="lvlup" id="lvlup" role="dialog"><div><div class="k">NYT BÅND · NY NIVÅ</div><div class="t" id="luT">Broens bedste ven</div><div class="s" id="luS">Den har lavet en tegning af jer to. Det er mest streger.</div><button class="lu-ok" id="luOk">Tack tack! 💛</button></div></div>
         </div>
