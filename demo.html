@@ -4,17 +4,51 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Gør broen glad · demo</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
 <style>
   html,body{height:100%;margin:0}
-  body{background:#0B1C25;display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;overflow:hidden}
+  body{background:#0B1C25;display:flex;align-items:center;justify-content:center;font-family:-apple-system,"SF Pro Text",Inter,system-ui,sans-serif;overflow:hidden}
   body.light{background:#E9F1F5}
   .phone{position:relative;width:min(393px, calc(100vh * 393/852 - 40px));aspect-ratio:393/852;border-radius:56px;background:#0a0a0a;
     box-shadow:0 0 0 2px #2a2a2a,0 0 0 12px #111,0 0 0 14px #333,0 50px 100px -30px rgba(0,0,0,.9)}
-  .phone iframe{position:absolute;inset:12px;width:calc(100% - 24px);height:calc(100% - 24px);border:0;border-radius:44px;background:#0E3B4E}
-  .island{position:absolute;top:22px;left:50%;transform:translateX(-50%);width:120px;height:34px;border-radius:20px;background:#000;z-index:2}
+  .screen{position:absolute;inset:12px;border-radius:44px;overflow:hidden;background:#000}
+  .island{position:absolute;top:22px;left:50%;transform:translateX(-50%);width:120px;height:34px;border-radius:20px;background:#000;z-index:9}
   .btn{position:absolute;background:#222;border-radius:3px}
   .btn.l1{left:-16px;top:150px;width:4px;height:34px}.btn.l2{left:-16px;top:200px;width:4px;height:64px}.btn.l3{left:-16px;top:275px;width:4px;height:64px}
   .btn.r{right:-16px;top:220px;width:4px;height:100px}
+
+  /* ---- home screen ---- */
+  .home{position:absolute;inset:0;color:#fff;
+    background:
+      radial-gradient(120% 60% at 50% 105%, #F2A93B 0%, rgba(242,169,59,0) 50%),
+      radial-gradient(90% 50% at 20% 30%, #1B6A86 0%, rgba(27,106,134,0) 60%),
+      linear-gradient(180deg,#0B2F3A 0%,#12475C 45%,#2C6E86 75%,#7DB2C3 100%);
+    transition:transform .45s cubic-bezier(.2,.8,.2,1), opacity .35s, filter .45s;}
+  .home.away{transform:scale(1.12);opacity:0;filter:blur(6px);pointer-events:none}
+  .status{position:absolute;top:0;left:0;right:0;height:60px;display:flex;justify-content:space-between;align-items:flex-end;padding:0 34px 0 38px;font-size:16px;font-weight:600}
+  .status .r{display:flex;gap:5px;align-items:center;font-size:13px}
+  .time{position:absolute;top:92px;left:0;right:0;text-align:center;font-size:82px;font-weight:300;letter-spacing:-.03em;line-height:1;text-shadow:0 4px 20px rgba(0,0,0,.25)}
+  .date{position:absolute;top:184px;left:0;right:0;text-align:center;font-size:17px;font-weight:500;opacity:.9}
+  .grid{position:absolute;top:240px;left:0;right:0;padding:0 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:26px 14px}
+  .app{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:default;-webkit-user-select:none;user-select:none}
+  .app .ic{width:62px;height:62px;border-radius:15px;display:grid;place-items:center;font-size:30px;box-shadow:0 6px 14px -6px rgba(0,0,0,.5);transition:transform .12s}
+  .app span{font-size:11.5px;font-weight:500;text-shadow:0 1px 4px rgba(0,0,0,.5)}
+  .app.bro{cursor:pointer} .app.bro .ic{background:#8FD0F2 url(icons/icon.svg) center/cover;position:relative}
+  .app.bro .ic::after{content:"1";position:absolute;top:-6px;right:-6px;background:#FF3B30;color:#fff;font-size:12px;font-weight:600;min-width:20px;height:20px;border-radius:10px;display:grid;place-items:center;border:2px solid rgba(0,0,0,.05)}
+  .app.bro:active .ic{transform:scale(.9)}
+  .dock{position:absolute;left:14px;right:14px;bottom:20px;height:96px;border-radius:34px;background:rgba(255,255,255,.22);backdrop-filter:blur(20px);display:flex;justify-content:space-around;align-items:center;padding:0 10px}
+  .dock .ic{width:62px;height:62px;border-radius:15px;display:grid;place-items:center;font-size:30px}
+  .dots{position:absolute;left:0;right:0;bottom:126px;display:flex;justify-content:center;gap:8px}
+  .dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.4)} .dots i:first-child{background:#fff}
+
+  /* ---- app layer ---- */
+  .appl{position:absolute;inset:0;transform:scale(.2);transform-origin:50% 42%;opacity:0;pointer-events:none;
+    transition:transform .5s cubic-bezier(.2,.9,.25,1), opacity .35s}
+  .appl.on{transform:scale(1);opacity:1;pointer-events:auto}
+  .appl iframe{width:100%;height:100%;border:0;background:#0E3B4E;display:block}
+  .homebar{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);width:140px;height:5px;border-radius:3px;background:rgba(255,255,255,.85);z-index:10;cursor:pointer;opacity:0;transition:opacity .3s}
+  .homebar.on{opacity:1}
+
   .hint{position:fixed;bottom:14px;left:0;right:0;text-align:center;color:#5c7684;font-size:12px}
   .hint kbd{background:#132a35;padding:2px 6px;border-radius:5px;color:#a7c0cc}
   body.light .hint{color:#7590A0}
@@ -24,16 +58,54 @@
   <div class="phone">
     <div class="island"></div>
     <span class="btn l1"></span><span class="btn l2"></span><span class="btn l3"></span><span class="btn r"></span>
-    <iframe src="index.html" title="Gør broen glad" allow="vibrate"></iframe>
+    <div class="screen">
+      <div class="home" id="home">
+        <div class="status"><span id="stTime">09:41</span><span class="r">●●●● <span>5G</span> <span>▮▮▮</span></span></div>
+        <div class="time" id="bigTime">09:41</div>
+        <div class="date" id="bigDate">Torsdag 11. september</div>
+        <div class="grid">
+          <div class="app"><div class="ic" style="background:linear-gradient(#5AC8FA,#1E90FF)">🗺️</div><span>Kort</span></div>
+          <div class="app"><div class="ic" style="background:#fff;color:#FF3B30;font-weight:600;font-size:26px">11</div><span>Kalender</span></div>
+          <div class="app"><div class="ic" style="background:linear-gradient(#fff,#eee)">🌸</div><span>Fotos</span></div>
+          <div class="app"><div class="ic" style="background:linear-gradient(#FC5C7D,#FF2D55)">🎵</div><span>Musik</span></div>
+          <div class="app"><div class="ic" style="background:linear-gradient(#3AA0FF,#1E5BFF)">⛅</div><span>Vejr</span></div>
+          <div class="app"><div class="ic" style="background:linear-gradient(#FFD60A,#FFB800)">📝</div><span>Noter</span></div>
+          <div class="app"><div class="ic" style="background:linear-gradient(#0E3B4E,#1B6A86);color:#FFD166;font-weight:700;font-size:15px">BIZZ</div><span>BroBizz</span></div>
+          <div class="app bro" id="broApp"><div class="ic"></div><span>Broen</span></div>
+        </div>
+        <div class="dots"><i></i><i></i><i></i></div>
+        <div class="dock">
+          <div class="ic" style="background:linear-gradient(#5FE07A,#1DB954)">📞</div>
+          <div class="ic" style="background:linear-gradient(#3AA0FF,#1E5BFF)">🧭</div>
+          <div class="ic" style="background:linear-gradient(#5FE07A,#34C759)">💬</div>
+          <div class="ic" style="background:linear-gradient(#FFD60A,#FF9F0A)">🎧</div>
+        </div>
+      </div>
+      <div class="appl" id="appl"><iframe src="index.html" title="Gør broen glad" allow="vibrate"></iframe></div>
+      <div class="homebar" id="homebar" title="Hjem"></div>
+    </div>
   </div>
-  <div class="hint"><kbd>F</kbd> fuld skærm · <kbd>L</kbd> lys baggrund · <kbd>R</kbd> genstart appen</div>
+  <div class="hint"><kbd>H</kbd> hjemmeskærm · <kbd>F</kbd> fuld skærm · <kbd>L</kbd> lys baggrund · <kbd>R</kbd> nulstil app</div>
 <script>
+  var home=document.getElementById("home"), appl=document.getElementById("appl"), bar=document.getElementById("homebar");
+  function openApp(){ home.classList.add("away"); appl.classList.add("on"); setTimeout(function(){ bar.classList.add("on"); },500); }
+  function goHome(){ appl.classList.remove("on"); home.classList.remove("away"); bar.classList.remove("on"); }
+  document.getElementById("broApp").addEventListener("click", openApp);
+  bar.addEventListener("click", goHome);
   document.addEventListener("keydown", function(e){
     var k=e.key.toLowerCase();
+    if(k==="h") goHome();
     if(k==="f"){ document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); }
-    if(k==="l"){ document.body.classList.toggle("light"); }
+    if(k==="l") document.body.classList.toggle("light");
     if(k==="r"){ var f=document.querySelector("iframe"); f.src=f.src; }
   });
+  (function clock(){
+    var d=new Date(), t=d.toLocaleTimeString("da-DK",{hour:"2-digit",minute:"2-digit"});
+    document.getElementById("stTime").textContent=t; document.getElementById("bigTime").textContent=t;
+    var ds=d.toLocaleDateString("da-DK",{weekday:"long",day:"numeric",month:"long"});
+    document.getElementById("bigDate").textContent=ds.charAt(0).toUpperCase()+ds.slice(1);
+    setTimeout(clock,10000);
+  })();
 </script>
 </body>
 </html>
