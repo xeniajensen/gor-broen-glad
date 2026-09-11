@@ -182,32 +182,35 @@
   .key small{font-family:var(--pixel); font-size:8px; letter-spacing:.12em; color:#7590A0; font-weight:400}
 
 
-  /* full-bleed app layout: no shell, scene is the screen */
-  body{display:block; padding:0; background:#0A1E27}
-  .egg{position:fixed; inset:0; width:auto; max-width:none; margin:0; padding:0; border-radius:0; background:#0A1E27; box-shadow:none; display:flex; flex-direction:column}
-  .egg::before{display:none}
-  .brand{display:none}
-  .lcd{flex:1; aspect-ratio:auto; max-height:none; border-radius:0; box-shadow:none; background:#0A1E27}
-  .scene{inset:0; border-radius:0}
-  .hud{top:max(12px, env(safe-area-inset-top)); left:16px; right:16px}
-  .moodtag{left:18px; bottom:84px; font-size:32px}
-  .bubble{left:16px; right:16px; bottom:16px; font-size:14px; padding:11px 14px}
-  .keys{margin:0; padding:14px 18px max(16px, env(safe-area-inset-bottom)); background:#0A1E27; gap:12px}
-  .key{color:#A9C0CC}
-  .key small{color:#6F8C9A}
-  .key .cap{width:60px; height:60px; box-shadow:0 5px 0 #4E6570, inset 0 2px 0 rgba(255,255,255,.7)}
-  .key.a .cap{box-shadow:0 5px 0 #B3781B, inset 0 2px 0 #fff}
-  .key.b .cap{box-shadow:0 5px 0 #B23A58, inset 0 2px 0 #fff}
-  .key:active .cap,.key.pressed .cap{box-shadow:0 1px 0 #4E6570}
-  @media (min-width:700px){ /* desktop: keep a phone-sized column */
-    body{background:radial-gradient(120% 80% at 50% 0%, #1B6A86, #0E3B4E 60%, #071E2A)}
-    .egg{inset:auto; position:relative; width:420px; height:min(860px, 100dvh); margin:0 auto; border-radius:0}
+  /* egg shell fills the phone; the scene is an egg-shaped window, no bezel */
+  body{display:block; padding:0; background:#071E2A}
+  .egg{
+    position:fixed; inset:6px; width:auto; max-width:none; margin:0; display:flex; flex-direction:column;
+    padding:max(14px, env(safe-area-inset-top)) 12px max(12px, env(safe-area-inset-bottom));
+    border-radius:46% 46% 44% 44% / 34% 34% 46% 46%;
   }
-  @media (min-width:700px) and (min-height:900px){ .egg{margin-top:calc((100dvh - 860px)/2)} }
-  .menu{bottom:auto; top:max(60px, calc(env(safe-area-inset-top) + 48px)); right:16px}
+  .egg::before{inset:8px}
+  .brand{margin:2px 0 8px}
+  .lcd{
+    flex:1; aspect-ratio:auto; max-height:none; background:transparent; box-shadow:none; margin:0 4px;
+    border-radius:50% 50% 46% 46% / 40% 40% 48% 48%;
+    box-shadow:inset 0 0 0 4px var(--shell-3), inset 0 10px 30px rgba(14,59,78,.35);
+  }
+  .scene{inset:4px; border-radius:inherit}
+  .hud{top:30px; left:40px; right:40px}
+  .moodtag{left:44px; bottom:118px; font-size:30px}
+  .bubble{left:36px; right:36px; bottom:40px; font-size:13.5px}
+  .sheet{border-radius:inherit}
+  .keys{margin:12px 8px 0; gap:10px}
+  .key .cap{width:58px; height:58px}
+  @media (min-width:700px){
+    body{background:radial-gradient(120% 80% at 50% 0%, #1B6A86, #0E3B4E 60%, #071E2A)}
+    .egg{inset:auto; position:relative; width:420px; height:min(860px, calc(100dvh - 24px)); margin:12px auto}
+  }
+  .menu{bottom:auto; top:64px; right:44px}
   .menu summary{background:rgba(10,30,39,.55); backdrop-filter:blur(4px); font-size:16px; width:30px; height:30px}
   .menu .m{bottom:auto; top:38px}
-  .install{bottom:auto; top:max(60px, calc(env(safe-area-inset-top) + 48px)); left:16px}
+  .install{bottom:auto; top:64px; left:44px}
 
   /* bropoint + rewards sheet */
   .hud{pointer-events:none} .hud .pts{pointer-events:auto}
