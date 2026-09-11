@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gør broen glad · demo</title>
+<style>
+  html,body{height:100%;margin:0}
+  body{background:#0B1C25;display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;overflow:hidden}
+  body.light{background:#E9F1F5}
+  .phone{position:relative;width:min(393px, calc(100vh * 393/852 - 40px));aspect-ratio:393/852;border-radius:56px;background:#0a0a0a;
+    box-shadow:0 0 0 2px #2a2a2a,0 0 0 12px #111,0 0 0 14px #333,0 50px 100px -30px rgba(0,0,0,.9)}
+  .phone iframe{position:absolute;inset:12px;width:calc(100% - 24px);height:calc(100% - 24px);border:0;border-radius:44px;background:#0E3B4E}
+  .island{position:absolute;top:22px;left:50%;transform:translateX(-50%);width:120px;height:34px;border-radius:20px;background:#000;z-index:2}
+  .btn{position:absolute;background:#222;border-radius:3px}
+  .btn.l1{left:-16px;top:150px;width:4px;height:34px}.btn.l2{left:-16px;top:200px;width:4px;height:64px}.btn.l3{left:-16px;top:275px;width:4px;height:64px}
+  .btn.r{right:-16px;top:220px;width:4px;height:100px}
+  .hint{position:fixed;bottom:14px;left:0;right:0;text-align:center;color:#5c7684;font-size:12px}
+  .hint kbd{background:#132a35;padding:2px 6px;border-radius:5px;color:#a7c0cc}
+  body.light .hint{color:#7590A0}
+</style>
+</head>
+<body>
+  <div class="phone">
+    <div class="island"></div>
+    <span class="btn l1"></span><span class="btn l2"></span><span class="btn l3"></span><span class="btn r"></span>
+    <iframe src="index.html" title="Gør broen glad" allow="vibrate"></iframe>
+  </div>
+  <div class="hint"><kbd>F</kbd> fuld skærm · <kbd>L</kbd> lys baggrund · <kbd>R</kbd> genstart appen</div>
+<script>
+  document.addEventListener("keydown", function(e){
+    var k=e.key.toLowerCase();
+    if(k==="f"){ document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); }
+    if(k==="l"){ document.body.classList.toggle("light"); }
+    if(k==="r"){ var f=document.querySelector("iframe"); f.src=f.src; }
+  });
+</script>
+</body>
+</html>
