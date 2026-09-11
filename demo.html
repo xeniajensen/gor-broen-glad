@@ -81,12 +81,13 @@
           <div class="ic" style="background:linear-gradient(#FFD60A,#FF9F0A)">🎧</div>
         </div>
       </div>
-      <div class="appl" id="appl"><iframe src="index.html" title="Gør broen glad" allow="vibrate"></iframe></div>
+      <div class="appl" id="appl"><iframe id="app" title="Gør broen glad" allow="vibrate"></iframe></div>
       <div class="homebar" id="homebar" title="Hjem"></div>
     </div>
   </div>
   <div class="hint"><kbd>H</kbd> hjemmeskærm · <kbd>F</kbd> fuld skærm · <kbd>L</kbd> lys baggrund · <kbd>R</kbd> nulstil app</div>
 <script>
+  document.getElementById("app").src="index.html?t="+Date.now();
   var home=document.getElementById("home"), appl=document.getElementById("appl"), bar=document.getElementById("homebar");
   function openApp(){ home.classList.add("away"); appl.classList.add("on"); setTimeout(function(){ bar.classList.add("on"); },500); }
   function goHome(){ appl.classList.remove("on"); home.classList.remove("away"); bar.classList.remove("on"); }
@@ -97,7 +98,7 @@
     if(k==="h") goHome();
     if(k==="f"){ document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen(); }
     if(k==="l") document.body.classList.toggle("light");
-    if(k==="r"){ var f=document.querySelector("iframe"); f.src=f.src; }
+    if(k==="r"){ document.getElementById("app").src="index.html?t="+Date.now(); }
   });
   (function clock(){
     var d=new Date(), t=d.toLocaleTimeString("da-DK",{hour:"2-digit",minute:"2-digit"});
